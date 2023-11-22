@@ -1,10 +1,9 @@
 const express = require('express')
 const connection = require('./database/database')
 const bodyParser = require('body-parser');
+const LabController = require("./labs/LabController");
 const UserController = require("./users/UserController");
 const session = require("express-session");
-
-
 
 const app = express()
 
@@ -27,6 +26,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 app.use("/", UserController);
+app.use("/", LabController);
 
 
 app.get('/', (req,res)=>{
