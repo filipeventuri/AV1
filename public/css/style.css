@@ -1,3 +1,15 @@
 .logo{
     font-family: 'Roboto Mono', monospace;
 }
+
+.painel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    margin: 0;
+  }
+
+  .options {
+    margin-top: 20px;
+  }

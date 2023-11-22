@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const LabController = require("./labs/LabController");
 const UserController = require("./users/UserController");
 const session = require("express-session");
+const adminAuth = require('./middlewares/adminAuth');
 
 const app = express()
 
@@ -31,6 +32,10 @@ app.use("/", LabController);
 
 app.get('/', (req,res)=>{
     res.render('index');
+})
+
+app.get('/admin/index', adminAuth, (req,res)=>{
+    res.render("admin/index");
 })
 
 app.listen(5000, ()=>{

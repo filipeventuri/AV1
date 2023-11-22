@@ -90,7 +90,7 @@ router.get("/login", (req,res)=>{
     if(req.session.user == undefined){
         res.render("admin/users/login");
     }else{
-        res.redirect("/admin/users");
+        res.redirect("/admin/index");
     }
 });
 
@@ -109,7 +109,7 @@ router.post("/authenticate", (req,res)=>{
                     id: user.id,
                     email: user.email
                 }
-                res.redirect("/admin/users");
+                res.render("admin/index");
             }else{
                 res.redirect("/login")
             }
@@ -120,7 +120,7 @@ router.post("/authenticate", (req,res)=>{
     })
 });
 
-router.get("/logout", adminAuth ,(req,res)=>{
+router.get("/logout", adminAuth, (req,res)=>{
     req.session.user = undefined;
     res.redirect("/");
 })
