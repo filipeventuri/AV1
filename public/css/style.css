@@ -1,4 +1,7 @@
-
+body {
+  height: 100%;
+  width: 100%;
+}
 .logo{
     font-family: 'Roboto Mono', monospace;
 }
@@ -13,4 +16,9 @@
 
   .options {
     margin-top: 20px;
+  }
+
+  .fy {
+    position: relative;
+    bottom: 0;
   }

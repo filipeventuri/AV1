@@ -1,14 +1,14 @@
 <%- include ("partials/header.ejs") %>
 <%- include ("partials/navbar.ejs")%>
 
-<div class="container">
-    <hr>
+<div class="container ">
+    <br>
     <h2>Laboratórios disponíveis</h2>
     <br>
-    <hr>
     
-   
-    <table class="table table-bordered">
+    <div class="table-responsive">
+        
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 
@@ -32,6 +32,8 @@
     </tbody>
     <% }) %>   
     </table>
+    </div>
+   
 </div>
 
 <%- include ("partials/footer.ejs") %>
