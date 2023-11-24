@@ -33,7 +33,7 @@ router.post("/users/create", (req,res)=>{
     //acima está a forma correta de armazenar a senha de um usuário no banco de dados
 })
 
-router.get("/admin/users",(req,res)=>{
+router.get("/admin/users", adminAuth,(req,res)=>{
     User.findAll().then((users)=>{
         res.render("admin/users/index", {users:users});  
     })
@@ -100,24 +100,27 @@ router.post("/authenticate", (req,res)=>{
 
     User.findOne({where:{email:email}}).then(user=>{
     
-        if(user!=undefined){
-            //validação de senha
-            var correct = bcrypt.compareSync(password, user.password);
-            //acima o bcrypt está fazendo hash no password e comparando com a senha do user que já está sobre hash
-            if(correct){
-                req.session.user = {
-                    id: user.id,
-                    email: user.email
+            if(user!=undefined){
+                //validação de senha
+                var correct = bcrypt.compareSync(password, user.password);
+                //acima o bcrypt está fazendo hash no password e comparando com a senha do user que já está sobre hash
+                if(correct){
+                    req.session.user = {
+                        id: user.id,
+                        email: user.email
+                    }
+                    res.render("admin/index");
+                }else{
+                    res.redirect("/login")
                 }
-                res.render("admin/index");
             }else{
-                res.redirect("/login")
+                res.redirect("/login");
             }
-        }else{
-            res.redirect("/login");
-        }
+            })
 
-    })
+    
+
+        
 });
 
 router.get("/logout", adminAuth, (req,res)=>{
