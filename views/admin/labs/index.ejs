@@ -12,7 +12,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Status</th>
                 <th>Nome</th>
                 <th>Cadeiras</th>
                 <th>Ações</th>
@@ -21,7 +21,7 @@
         <% labs.forEach(one=>{ %>
     <tbody> 
         
-            <th><%= one.id %></th>
+            <th><%= one.status %></th>
             <th><%= one.name %></th>
             <th><%= one.seats %></th>
             <th>
@@ -30,6 +30,11 @@
             <input type="hidden" name="id" value="<%= one.id %>">
             <button class="btn btn-danger">Remover</button>
             </form>
+            <form method="POST" action="/labs/reserve/release/<%= one.id %>" style="display: inline;">
+                <input type="hidden" name="status" value="Disponível">
+                <input type="hidden" name="tutor" value="">
+                <button class="btn btn-success">Liberar Reserva</button>
+                </form>
             </th>
     
     </tbody>

@@ -7,6 +7,21 @@ router.get("/admin/labs/create",(req,res)=>{
     res.render("admin/labs/create");
 })
 
+router.get("/labs/reserve",(req,res)=>{
+    Lab.findAll({where:{status:"Disponível"}}).then(labs=>{
+        res.render("reserve", {labs:labs} );
+    })
+    
+})
+
+router.post("/labs/reserve/action", (req,res)=>{
+    var{id,tutor,status}=req.body;
+
+    Lab.update({status:status,tutor:tutor},{where:{id:id}}).then(()=>{
+        res.render("done");
+    })
+})
+
 router.post("/labs/create", (req,res)=>{
     var{name,seats}=req.body
 
@@ -14,7 +29,8 @@ router.post("/labs/create", (req,res)=>{
         if(lab == undefined){
            Lab.create({
                 name: name,
-                seats:seats
+                seats:seats,
+                status: "Disponível"
             }).then(()=>{
                 res.redirect("/admin/labs");
             }).catch(()=>{
@@ -51,7 +67,15 @@ router.get("/admin/labs", (req,res)=>{
 
 })
 
-router.get("/admin/labs/edit/:id",(req,res)=>{
+router.get("/labs", (req,res)=>{
+
+    Lab.findAll().then(labs=>{
+        res.render("lab", {labs:labs})
+    })
+
+})
+
+router.post("/admin/labs/edit/:id",(req,res)=>{
     var id = req.params.id;
 
     if(isNaN(id)){
@@ -67,6 +91,16 @@ router.get("/admin/labs/edit/:id",(req,res)=>{
     }).catch(()=>{
         res.redirect("/admin/labs");
     })
+})
+
+router.post("/labs/reserve/release/:id",(req,res)=>{
+    var id = req.params.id;
+    var {tutor,status}=req.body;
+
+    Lab.update({status:status, tutor:tutor},{where:{id:id}}).then(()=>{
+        res.redirect("/admin/labs");
+    })
+    
 })
 
 router.post("/labs/update", (req,res)=>{

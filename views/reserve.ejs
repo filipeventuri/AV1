@@ -1,0 +1,30 @@
+<%- include ("partials/header.ejs") %>
+<%- include ("partials/navbar.ejs")%>
+
+<div class="container">
+    <hr>
+    <div class="card mb-5">
+        <div class="card-header">
+            <h2> RESERVA DE LABORATÓRIO</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/labs/reserve/action">
+                <label>Laboratório</label>
+                <br>
+                <select class="form-control" name="id">
+                    <% labs.forEach((lab)=>{ %>
+                        <option value="<%= lab.id %>"><%= lab.name %></option>
+                    <% }) %>
+                </select>
+                <br>
+                <input  class="form-control" type="text" name="tutor" placeholder="Nome do Responsável">
+                <br>
+                <input  type="hidden" name="status" value="Indisponível">
+                <button class="btn btn-success">Enviar</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<%- include ("partials/footer.ejs") %>

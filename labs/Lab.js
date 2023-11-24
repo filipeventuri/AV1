@@ -13,8 +13,8 @@ const Lab = connection.define('labs', {
 
     },
     status:{
-        type: sequelize.BOOLEAN,
-        defaultValue: false
+        type: sequelize.STRING,
+        allowNull: false
     },
     tutor:{
         type: sequelize.STRING,
