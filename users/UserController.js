@@ -4,11 +4,11 @@ const User = require("./User");
 const bcrypt = require("bcryptjs");
 const adminAuth = require("../middlewares/adminAuth");
 
-router.get("/admin/users/create",(req,res)=>{
+router.get("/admin/users/create", adminAuth, (req,res)=>{
     res.render("admin/users/create");
 })
 
-router.post("/users/create", (req,res)=>{
+router.post("/users/create", adminAuth, (req,res)=>{
     var email = req.body.email;
     var password = req.body.password;
     var salt = bcrypt.genSaltSync(10); // NUMERO ALEATÓRIO PRA GERAR O SALT
@@ -40,7 +40,14 @@ router.get("/admin/users", adminAuth,(req,res)=>{
 
 })
 
-router.post("/users/delete", (req,res)=>{
+router.get("/users", (req,res)=>{
+    User.findAll().then((users)=>{
+        res.render("users", {users:users});  
+    })
+
+})
+
+router.post("/users/delete", adminAuth, (req,res)=>{
     var id = req.body.id;
     if(id!=undefined && id!=NaN){
         User.destroy({
@@ -55,7 +62,7 @@ router.post("/users/delete", (req,res)=>{
     }
 })
 
-router.get("/admin/users/edit/:id",(req,res)=>{
+router.get("/admin/users/edit/:id", adminAuth,(req,res)=>{
     var id = req.params.id;
 
     if(isNaN(id)){
@@ -73,7 +80,7 @@ router.get("/admin/users/edit/:id",(req,res)=>{
     })
 })
 
-router.post("/users/update", (req,res)=>{
+router.post("/users/update", adminAuth, (req,res)=>{
     var id = req.body.id;
     var password = req.body.password;
 

@@ -3,7 +3,7 @@ const router = express.Router();
 const Lab = require("./Lab");
 const adminAuth = require("../middlewares/adminAuth");
 
-router.get("/admin/labs/create",(req,res)=>{
+router.get("/admin/labs/create", adminAuth,(req,res)=>{
     res.render("admin/labs/create");
 })
 
@@ -22,7 +22,7 @@ router.post("/labs/reserve/action", (req,res)=>{
     })
 })
 
-router.post("/labs/create", (req,res)=>{
+router.post("/labs/create", adminAuth, (req,res)=>{
     var{name,seats}=req.body
 
     Lab.findOne({where:{name:name,seats:seats}}).then( lab =>{
@@ -44,7 +44,7 @@ router.post("/labs/create", (req,res)=>{
 
 })
 
-router.post("/labs/delete", (req,res)=>{
+router.post("/labs/delete", adminAuth, (req,res)=>{
     var id = req.body.id;
     if(id!=undefined && id!=NaN){
         Lab.destroy({
@@ -59,7 +59,7 @@ router.post("/labs/delete", (req,res)=>{
     }
 })
 
-router.get("/admin/labs", (req,res)=>{
+router.get("/admin/labs", adminAuth, (req,res)=>{
 
     Lab.findAll().then(labs=>{
         res.render("admin/labs/index", {labs:labs})
@@ -75,7 +75,7 @@ router.get("/labs", (req,res)=>{
 
 })
 
-router.post("/admin/labs/edit/:id",(req,res)=>{
+router.post("/admin/labs/edit/:id", adminAuth,(req,res)=>{
     var id = req.params.id;
 
     if(isNaN(id)){
@@ -93,7 +93,7 @@ router.post("/admin/labs/edit/:id",(req,res)=>{
     })
 })
 
-router.post("/labs/reserve/release/:id",(req,res)=>{
+router.post("/labs/reserve/release/:id", adminAuth,(req,res)=>{
     var id = req.params.id;
     var {tutor,status}=req.body;
 
@@ -103,7 +103,7 @@ router.post("/labs/reserve/release/:id",(req,res)=>{
     
 })
 
-router.post("/labs/update", (req,res)=>{
+router.post("/labs/update", adminAuth, (req,res)=>{
     var{id,name,seats}=req.body;
 
     Lab.update({name:name,seats:seats},{where:{id:id}}).then(()=>{

@@ -1,0 +1,26 @@
+<%- include ("partials/header.ejs") %>
+<%- include ("partials/navbar.ejs")%>
+<div class="container">
+    <hr>
+    <h2> FUNCIONÁRIOS</h2>
+    <hr>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <% users.forEach((one)=>{ %>
+        <tbody>          
+                <th><%= one.email %></th>      
+        </tbody>
+        <% }) %>
+        </table>
+    </div>
+   
+    
+</div>
+
+<%- include ("partials/footer.ejs") %>
