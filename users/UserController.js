@@ -4,13 +4,12 @@ const User = require("./User");
 const bcrypt = require("bcryptjs");
 const adminAuth = require("../middlewares/adminAuth");
 
-router.get("/admin/users/create", adminAuth, (req,res)=>{
+router.get("/admin/users/create",  (req,res)=>{
     res.render("admin/users/create");
 })
 
-router.post("/users/create", adminAuth, (req,res)=>{
-    var email = req.body.email;
-    var password = req.body.password;
+router.post("/users/create", (req,res)=>{
+    var {email,name,password}= req.body;
     var salt = bcrypt.genSaltSync(10); // NUMERO ALEATÓRIO PRA GERAR O SALT
     var hash= bcrypt.hashSync(password, salt);
 
@@ -18,6 +17,7 @@ router.post("/users/create", adminAuth, (req,res)=>{
         if(user == undefined){
             User.create({
                 email: email,
+                name:name,
                 password: hash
             }).then(()=>{
                 res.redirect("/");

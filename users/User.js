@@ -7,6 +7,10 @@ const User = connection.define('users', {
         type: sequelize.STRING,
         allowNull:false
     },
+    name:{
+        type: sequelize.STRING,
+        allowNull:false
+    },
     password:{
         type: sequelize.STRING,
         allowNull:false
