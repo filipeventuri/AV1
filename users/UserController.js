@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require("./User");
+const transporter = require("./nodemailer/nodemailer");
 const bcrypt = require("bcryptjs");
 const adminAuth = require("../middlewares/adminAuth");
 
@@ -12,9 +13,18 @@ router.post("/users/create", (req,res)=>{
     var {email,name,password}= req.body;
     var salt = bcrypt.genSaltSync(10); // NUMERO ALEATÓRIO PRA GERAR O SALT
     var hash= bcrypt.hashSync(password, salt);
+    const mail = {
+        from:'reservesystemlab@gmail.com',
+        to: email,
+        subject: 'Bem-vindo ao RSL',
+        html: `${name}, agradeço imensamente pelo seu cadastro em nosso sistema. Caso haja alguma dúvida sobre o funcionamento deste, por favor encaminhe para o email filipeventuri@hotmail.com`
+    };
 
     User.findOne({where:{email:email}}).then( user =>{
         if(user == undefined){
+            
+            transporter.sendMail(mail);
+
             User.create({
                 email: email,
                 name:name,
